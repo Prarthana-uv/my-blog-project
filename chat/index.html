@@ -18,10 +18,20 @@
       </div>
     </header>
 
+    <section class="intro">
+      <p class="tagline">Ask questions, brainstorm ideas, or get help writing.
+      </p>
+      <div class="chips" id="chips">
+        <button type="button" class="chip" data-text="Write a 2-sentence fun fact about space.">Fun fact about space</button>
+        <button type="button" class="chip" data-text="Explain recursion in simple words.">Explain recursion</button>
+        <button type="button" class="chip" data-text="Give me 3 dinner ideas under 500 calories.">Healthy dinner ideas</button>
+      </div>
+    </section>
+
     <main class="chat" id="chat"></main>
 
     <form class="composer" id="composer">
-      <textarea id="message" placeholder="Type your message..." rows="1"></textarea>
+      <textarea id="message" placeholder="Type your message... (Shift+Enter for new line)" rows="1"></textarea>
       <button id="send" type="submit">Send</button>
     </form>
   </div>

@@ -2,6 +2,7 @@
   const chatEl = document.getElementById('chat');
   const formEl = document.getElementById('composer');
   const inputEl = document.getElementById('message');
+  const chipsEl = document.getElementById('chips');
   const FIXED_MODEL = 'gemini-1.5-flash';
   const endpoint = (window.GEMINI_CHAT_CONFIG && window.GEMINI_CHAT_CONFIG.endpoint) || 'gemini_chat.php';
 
@@ -33,6 +34,9 @@
     chatEl.scrollTop = chatEl.scrollHeight;
   }
 
+  // Welcome message
+  appendMessage('model', 'Hi! I\'m Gemini. Ask me anything or pick a suggestion below.');
+
   function setBusy(isBusy) {
     const btn = formEl.querySelector('button');
     btn.disabled = isBusy;
@@ -45,7 +49,24 @@
   }
 
   inputEl.addEventListener('input', autoResize);
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      formEl.requestSubmit();
+    }
+  });
   autoResize();
+
+  // Quick suggestions
+  if (chipsEl) {
+    chipsEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-text]');
+      if (!btn) return;
+      inputEl.value = btn.getAttribute('data-text');
+      autoResize();
+      formEl.requestSubmit();
+    });
+  }
 
   formEl.addEventListener('submit', async (e) => {
     e.preventDefault();
