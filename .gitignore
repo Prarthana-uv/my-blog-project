@@ -1,0 +1,24 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore log files
+*.log
+
+# Ignore backup files
+*.bak
+*~
+
+# Ignore large media files (if any)
+*.mp4
+*.avi
+*.mov
+*.mkv
