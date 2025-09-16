@@ -13,7 +13,7 @@
     },
     {
       "src": "/api/gemini-chat",
-      "dest": "/chat/api/gemini-chat.js"
+      "dest": "/api/gemini-chat.js"
     }
   ]
 }

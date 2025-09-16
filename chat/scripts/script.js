@@ -2,7 +2,7 @@
   const chatEl = document.getElementById('chat');
   const formEl = document.getElementById('composer');
   const inputEl = document.getElementById('message');
-  const modelEl = document.getElementById('model-select');
+  const FIXED_MODEL = 'gemini-1.5-flash';
   const endpoint = (window.GEMINI_CHAT_CONFIG && window.GEMINI_CHAT_CONFIG.endpoint) || 'gemini_chat.php';
 
   /** @type {{ role: 'user'|'model', content: string }[]} */
@@ -34,7 +34,9 @@
   }
 
   function setBusy(isBusy) {
-    formEl.querySelector('button').disabled = isBusy;
+    const btn = formEl.querySelector('button');
+    btn.disabled = isBusy;
+    btn.textContent = isBusy ? 'Sending…' : 'Send';
   }
 
   function autoResize() {
@@ -60,7 +62,7 @@
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages, model: modelEl.value })
+        body: JSON.stringify({ messages, model: FIXED_MODEL })
       });
 
       if (!res.ok) {
@@ -73,7 +75,11 @@
       messages.push({ role: 'model', content: reply });
       appendMessage('model', reply);
     } catch (err) {
-      const msg = (err && err.message) ? err.message : 'Request failed';
+      let msg = (err && err.message) ? err.message : 'Request failed';
+      // More helpful hints for common misconfigurations
+      if (/Missing GEMINI_API_KEY/i.test(msg)) {
+        msg = 'Server is missing GEMINI_API_KEY. Add it in Vercel → Settings → Environment Variables, then redeploy.';
+      }
       appendMessage('model', `Error: ${msg}`);
     } finally {
       setBusy(false);
