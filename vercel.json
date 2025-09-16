@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "chat/index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/chat/index.html"
+    },
+    {
+      "src": "/api/gemini-chat",
+      "dest": "/chat/api/gemini-chat.js"
+    }
+  ]
+}
