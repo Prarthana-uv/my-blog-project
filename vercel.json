@@ -6,8 +6,16 @@
       "dest": "/landing.html"
     },
     {
+      "src": "/detector",
+      "dest": "/detector/index.html"
+    },
+    {
       "src": "/api/gemini-chat",
       "dest": "/api/gemini-chat.js"
+    },
+    {
+      "src": "/api/analyze",
+      "dest": "/api/analyze.js"
     }
   ]
 }

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+  <head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fake News Detector</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles/landing.css">
+
+    <style>
+      .detector { max-width: 920px; margin: 30px auto; padding: 0 16px; }
+      .form { display: grid; gap: 10px; }
+      textarea { resize: vertical; min-height: 140px; padding: 12px 14px; border-radius: 12px; background: #0e1530; border: 1px solid #222a4c; color: #e6e8ef; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-size: 14px; }
+      input[type="url"] { padding: 12px 14px; border-radius: 12px; background: #0e1530; border: 1px solid #222a4c; color: #e6e8ef; font-family: inherit; font-size: 14px; }
+      .results { margin-top: 14px; }
+      .result-card { margin-top: 10px; }
+      .bad { border-color: #5b2136; background: rgba(120, 25, 55, 0.25); }
+      .ok { border-color: #224a2c; background: rgba(32, 120, 64, 0.22); }
+      .neutral { border-color: #2a3664; background: rgba(14, 21, 48, 0.9); }
+      label { color: #a8b0c0; font-size: 13px; }
+    </style>
+
+  </head>
+
+  <body>
+
+    <header class="site-header">
+
+      <div class="container header-inner">
+
+        <div class="brand">TruthLens</div>
+
+        <nav class="nav">
+
+          <a href="../landing.html">Home</a>
+
+          <a href="../chat/index.html">Chat</a>
+
+          <a href="../index.php">Blog</a>
+
+        </nav>
+
+        <div class="cta">
+
+          <a class="btn" href="../landing.html">Back</a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <main class="detector">
+
+      <div class="card glass">
+
+        <h1 style="margin-top: 0;">Fake News Detector</h1>
+
+        <p style="color:#a8b0c0; margin-top: 6px;">Paste an article or provide a URL. The model will assess credibility and provide evidence-based signals. Avoid sharing personal data.</p>
+
+        <form id="detect-form" class="form">
+
+          <label for="articleUrl">Article URL (optional)</label>
+
+          <input id="articleUrl" name="url" type="url" placeholder="https://example.com/news/article">
+
+          <label for="articleText">Article Text</label>
+
+          <textarea id="articleText" name="text" placeholder="Paste article text here..."></textarea>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+
+            <button id="analyzeBtn" class="btn primary" type="submit">Analyze</button>
+
+            <span id="status" style="color:#a8b0c0; font-size:13px;"></span>
+
+          </div>
+
+        </form>
+
+        <div class="results" id="results">
+
+          <div id="summary" class="card result-card neutral" style="display:none;"></div>
+
+          <div id="evidence" class="card result-card neutral" style="display:none;"></div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <footer class="site-footer">
+
+      <div class="container footer-inner">
+
+        <div>© <span id="year"></span> TruthLens</div>
+
+        <div class="footer-links">
+
+          <a href="../landing.html">Home</a>
+
+          <a href="../chat/index.html">App</a>
+
+          <a href="../index.php">Blog</a>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+      (function(){
+        var y = document.getElementById('year');
+        if (y) y.textContent = new Date().getFullYear();
+      })();
+    </script>
+
+  </body>
+  
+</html>
+
+
