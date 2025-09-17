@@ -3,7 +3,7 @@
   "routes": [
     {
       "src": "/",
-      "dest": "/chat/index.html"
+      "dest": "/landing.html"
     },
     {
       "src": "/api/gemini-chat",
