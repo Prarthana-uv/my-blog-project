@@ -48,106 +48,16 @@
     </header>
 
     <main>
-
       <section class="hero">
-
-        <div class="container hero-inner">
-
-          <div class="hero-copy">
-
-
-            <h1><span style="font-weight:800;">See insights</span> with clarity.</h1>
-            <p>Ask, analyze, and explore with an elegant AI chat.<br>Clean, fast, and focused on what matters.</p>
-
-            <div class="hero-actions">
-
-              <a class="btn primary" href="detector/index.html">Detect Fake News</a>
-
-              <a class="btn ghost" href="chat/index.html">Try Gemini Chat</a>
-
-            </div>
-
-          </div>
-
-          <div class="hero-visual card glass">
-
-            <img src="media/screenshot1.jpg" alt="App screenshot">
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <hr style="border: none; border-top: 1.5px solid #232a4c; margin: 0 0 32px 0; opacity: 0.18;">
-      <section class="features">
-        <div class="container grid-3">
-          <div class="feature card glass">
-            <h3>Fast & Lightweight</h3>
-            <p>Minimal footprint, instant loads, and responsive interactions on any device.</p>
-          </div>
-          <div class="feature card glass">
-            <h3>Thoughtful UI</h3>
-            <p>Dark, glassy surfaces with subtle depth—easy on the eyes, easy to use.</p>
-          </div>
-          <div class="feature card glass">
-            <h3>Powered by Gemini</h3>
-            <p>Chat with Google Gemini via a simple, secure API bridge.</p>
+        <div class="container hero-inner" style="min-height: 60vh; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+          <h1 style="font-size:2.5rem; font-weight:800; margin-bottom: 18px;">TruthLens</h1>
+          <p style="font-size:1.2rem; margin-bottom: 32px; color:#b2b8d6;">AI-powered tools for news detection and chat</p>
+          <div class="hero-actions" style="display: flex; gap: 18px;">
+            <a class="btn primary" href="detector/index.html">Detect Fake News</a>
+            <a class="btn ghost" href="chat/index.html">Gemini Chat</a>
           </div>
         </div>
       </section>
-      <hr style="border: none; border-top: 1.5px solid #232a4c; margin: 32px 0 0 0; opacity: 0.18;">
-
-      <section class="how">
-
-        <div class="container how-inner">
-
-          <div class="how-copy">
-
-            <h2>How it works</h2>
-
-            <ol>
-
-              <li>Open the chat and ask any question.</li>
-
-              <li>Gemini responds clearly and quickly.</li>
-
-
-
-            </ol>
-
-          </div>
-
-          <div class="how-visual card glass">
-
-            <img src="media/screenshot2.jpg" alt="How it works screenshot">
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <section class="cta-section">
-
-        <div class="container cta-inner card glass">
-
-          <h2>Ready to explore?</h2>
-
-          <p>Jump into the chat or try the AI detector now.</p>
-
-          <div class="hero-actions">
-
-            <a class="btn primary" href="detector/index.html">Start Detecting</a>
-
-
-
-          </div>
-
-        </div>
-
-      </section>
-
     </main>
 
     <footer class="site-footer">
@@ -170,12 +80,15 @@
 
     </footer>
 
+
     <script>
       (function(){
         var y = document.getElementById('year');
         if (y) y.textContent = new Date().getFullYear();
       })();
     </script>
+    <!-- Vercel Analytics -->
+    <script defer src="https://analytics.vercel.com/script.js" data-api="/api/event" data-domain="your-vercel-domain.vercel.app"></script>
 
   </body>
   
