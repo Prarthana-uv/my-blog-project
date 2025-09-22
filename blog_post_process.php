@@ -20,31 +20,33 @@ $blogPara = $_POST["blogpara"];
 
 $conn = new mysqli($servername, $username, $password, $database);
 
-if($conn->connect_error) die("Connection to database failed") . $conn->connect->error;
+if($conn->connect_error) die("Connection to database failed: " . $conn->connect_error);
 
 $filename = "NONE";
 
 if(isset($_FILES['uploadimage']))
 {
-  $GLOBALS['filename'] = $_FILES['uploadimage']['name'];
+  $filename = $_FILES['uploadimage']['name'];
   
   $tempname = $_FILES['uploadimage']['tmp_name'];
   
-  move_uploaded_file($tempname, "images/" . $GLOBALS['filename']);
+  move_uploaded_file($tempname, "images/" . $filename);
 }
 
-$sql = "insert into blog_table (topic_title, topic_date, image_filename, topic_para) values ('" . $blogTitle . "', '" . $blogDate . "', '" . $filename . "', '" . $blogPara . "');";
+// Use prepared statement to prevent SQL injection
+$stmt = $conn->prepare("INSERT INTO blog_table (topic_title, topic_date, image_filename, topic_para) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("ssss", $blogTitle, $blogDate, $filename, $blogPara);
 
-if($conn->query($sql) === TRUE)
+if($stmt->execute())
 {
   echo "";
 }
-
 else
 {
   echo "Error Saving Post";
 }
 
+$stmt->close();
 $conn->close();
 
 ?>

@@ -1,6 +1,6 @@
 const d = new Date();
 
-var DATE = String(d.getDate()) + '/' + String(d.getMonth()) + '/' + String(d.getFullYear());
+var DATE = String(d.getDate()) + '/' + String(d.getMonth() + 1) + '/' + String(d.getFullYear());
 
 var TIME = d.toLocaleString("en-US",
 

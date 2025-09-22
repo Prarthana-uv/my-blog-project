@@ -38,11 +38,11 @@
 
       $conn = new mysqli($servername, $username, $password, $database);
 
-      if($conn->connect_error) die("Connection Error" . $conn->connect_error);
+      if($conn->connect_error) die("Connection Error: " . $conn->connect_error);
 
-      $sql = "select topic_title, topic_date, image_filename, topic_para from blog_table;";
-
-      $result = $conn->query($sql);
+      $stmt = $conn->prepare("SELECT topic_title, topic_date, image_filename, topic_para FROM blog_table");
+      $stmt->execute();
+      $result = $stmt->get_result();
 
       if($result->num_rows > 0)
       {
@@ -69,6 +69,7 @@
         // echo "<center><a style='color: dodgerblue;' href='index.html'>Write a New Post</a></center>";
       }
 
+      $stmt->close();
       $conn->close();
       
       ?>

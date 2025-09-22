@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -13,7 +13,11 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'Missing GEMINI_API_KEY env var' });
+    console.error('Available env vars:', Object.keys(process.env).filter(k => k.includes('GEMINI') || k.includes('API')));
+    return res.status(500).json({ 
+      error: 'Missing GEMINI_API_KEY env var',
+      debug: 'Check environment variables in Vercel dashboard or .env file'
+    });
   }
 
   try {
@@ -43,6 +47,7 @@ export default async function handler(req, res) {
 
     const json = await upstream.json().catch(() => ({}));
     if (!upstream.ok) {
+      console.error('Upstream error:', json);
       return res.status(upstream.status).json({ error: 'Upstream error', status: upstream.status, raw: json });
     }
 
@@ -67,8 +72,8 @@ Prioritize source credibility, claim specificity, corroboration with reputable o
 
 function extractText(json) {
   let out = '';
-  const parts = json?.candidates?.[0]?.content?.parts || [];
-  for (const p of parts) { if (p?.text) out += p.text; }
+  const parts = json && json.candidates && json.candidates[0] && json.candidates[0].content && json.candidates[0].content.parts || [];
+  for (const p of parts) { if (p && p.text) out += p.text; }
   return out || '';
 }
 
@@ -102,4 +107,4 @@ function sanitize(obj) {
   return { verdict, confidence, rationale, signals };
 }
 
-
+export default handler;

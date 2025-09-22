@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/",
@@ -10,12 +16,27 @@
       "dest": "/detector/index.html"
     },
     {
+      "src": "/chat",
+      "dest": "/chat/index.html"
+    },
+    {
       "src": "/api/gemini-chat",
       "dest": "/api/gemini-chat.js"
     },
     {
       "src": "/api/analyze",
       "dest": "/api/analyze.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
-  ]
+  ],
+  "env": {
+    "GEMINI_API_KEY": "@gemini_api_key",
+    "MONGODB_URI": "@mongodb_uri",
+    "CLOUDINARY_CLOUD_NAME": "@cloudinary_cloud_name",
+    "CLOUDINARY_API_KEY": "@cloudinary_api_key",
+    "CLOUDINARY_API_SECRET": "@cloudinary_api_secret"
+  }
 }
