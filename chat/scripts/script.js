@@ -4,7 +4,8 @@
   const inputEl = document.getElementById('message');
   const chipsEl = document.getElementById('chips');
   const FIXED_MODEL = 'gemini-1.5-flash';
-  const endpoint = (window.GEMINI_CHAT_CONFIG && window.GEMINI_CHAT_CONFIG.endpoint) || 'gemini_chat.php';
+  // Use the Vercel serverless API endpoint
+  const endpoint = (window.GEMINI_CHAT_CONFIG && window.GEMINI_CHAT_CONFIG.endpoint) || '/api/gemini-chat';
 
   /** @type {{ role: 'user'|'model', content: string }[]} */
   const messages = [];
