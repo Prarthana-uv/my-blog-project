@@ -42,6 +42,17 @@
     const btn = formEl.querySelector('button');
     btn.disabled = isBusy;
     btn.textContent = isBusy ? 'Sending…' : 'Send';
+    let spinner = document.getElementById('chat-loading-spinner');
+    if (!spinner) {
+      spinner = document.createElement('div');
+      spinner.id = 'chat-loading-spinner';
+      spinner.innerHTML = '<span class="spinner"></span> Waiting for Gemini...';
+      spinner.style.textAlign = 'center';
+      spinner.style.margin = '18px 0';
+      spinner.style.color = '#3b5eff';
+      chatEl.parentNode.insertBefore(spinner, chatEl.nextSibling);
+    }
+    spinner.style.display = isBusy ? '' : 'none';
   }
 
   function autoResize() {
@@ -79,6 +90,8 @@
     messages.push({ role: 'user', content: text });
     appendMessage('user', text);
     setBusy(true);
+    const chatErrorEl = document.getElementById('chat-error');
+    if (chatErrorEl) chatErrorEl.textContent = '';
 
     try {
       const res = await fetch(endpoint, {
@@ -102,7 +115,9 @@
       if (/Missing GEMINI_API_KEY/i.test(msg)) {
         msg = 'Server is missing GEMINI_API_KEY. Add it in Vercel → Settings → Environment Variables, then redeploy.';
       }
-      appendMessage('model', `Error: ${msg}`);
+      // Show error in a more visible way
+      appendMessage('model', `❗ ${msg}`);
+      if (chatErrorEl) chatErrorEl.textContent = msg;
     } finally {
       setBusy(false);
     }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <div class="blog-app">
+    <header class="blog-header">
+      <h1>Blog</h1>
+      <a href="../landing.html">← Back to Home</a>
+    </header>
+    <main>
+      <section id="blog-list-section">
+        <h2>Posts</h2>
+        <div id="blog-list" class="blog-list"></div>
+      </section>
+      <section id="blog-form-section">
+        <h2>Add New Post</h2>
+        <form id="blog-form" enctype="multipart/form-data">
+          <input type="text" id="title" name="title" placeholder="Title" maxlength="200" required />
+          <input type="date" id="date" name="date" required />
+          <textarea id="content" name="content" placeholder="Content" required></textarea>
+          <input type="file" id="uploadimage" name="uploadimage" accept="image/*" />
+          <button type="submit">Add Post</button>
+        </form>
+        <div id="blog-form-error" class="error"></div>
+      </section>
+    </main>
+  </div>
+  <script src="blog.js"></script>
+</body>
+</html>

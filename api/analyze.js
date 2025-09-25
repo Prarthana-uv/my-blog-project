@@ -1,3 +1,5 @@
+import { fetchNewsSnippets } from './news.js';
+
 async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -26,7 +28,19 @@ async function handler(req, res) {
       return res.status(400).json({ error: 'Provide text or url' });
     }
 
-    const prompt = buildPrompt(url, text);
+    // Fetch live news snippets for real-time context
+    let newsSnippets = [];
+    let newsQuery = text || url || '';
+    try {
+      if (newsQuery) {
+        newsSnippets = await fetchNewsSnippets(newsQuery, 3);
+      }
+    } catch (e) {
+      // If Bing News fails, continue without news
+      newsSnippets = [];
+    }
+
+    const prompt = buildPromptWithNews(url, text, newsSnippets);
 
     const body = {
       contents: [
@@ -59,10 +73,28 @@ async function handler(req, res) {
   }
 }
 
-function buildPrompt(url, text) {
-  const base = `You are a fact-checking assistant assessing whether an article is likely misinformation.
-Return a concise JSON with keys: verdict (Likely True|Uncertain|Likely False), confidence (0..1), rationale, signals (array of short bullet points). Do not include markdown fences.
-Prioritize source credibility, claim specificity, corroboration with reputable outlets, and language cues.`;
+function buildPromptWithNews(url, text, newsSnippets) {
+  const base = `You are an advanced fact-checking AI. Your job is to assess whether a news article or claim is likely misinformation, using the latest available evidence and reputable sources.
+
+Instructions:
+- Search for and cite credible sources (news, scientific, government, fact-checkers) that support or refute the claim/article.
+- If a URL is provided, analyze the content and cross-check with external sources.
+- If only text is provided, treat it as the main claim or article.
+- Consider context, date, and possible bias.
+- If the claim is unverified or ambiguous, say so and explain why.
+
+You are provided with recent news snippets for context. Use them as evidence if relevant:
+${newsSnippets && newsSnippets.length ? newsSnippets.map((n, i) => `  [${i+1}] ${n.name} (${n.provider}): ${n.description} [${n.url}]`).join('\n') : '  (No recent news found)'}
+
+Return a concise JSON with these keys:
+  verdict: (Likely True | Uncertain | Likely False)
+  confidence: (0..1)
+  rationale: (short, clear explanation with evidence and citations)
+  signals: (array of short bullet points, each with a source or reasoning)
+
+Do NOT include markdown fences or extra commentary. Only output the JSON object.
+
+Prioritize accuracy, evidence, and transparency.`;
   const source = [
     url ? `URL: ${url}` : '',
     text ? `TEXT: ${text}` : ''

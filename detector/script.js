@@ -9,12 +9,22 @@
   function setBusy(isBusy){
     var btn = document.getElementById('analyzeBtn');
     btn.disabled = isBusy;
-    statusEl.textContent = isBusy ? 'Analyzing…' : '';
+    if (!document.getElementById('detector-loading-spinner')) {
+      var spinner = document.createElement('div');
+      spinner.id = 'detector-loading-spinner';
+      spinner.innerHTML = '<span class="spinner"></span> Analyzing...';
+      spinner.style.textAlign = 'center';
+      spinner.style.margin = '18px 0';
+      spinner.style.color = '#3b5eff';
+      statusEl.parentNode.insertBefore(spinner, statusEl.nextSibling);
+    }
+    var spinner = document.getElementById('detector-loading-spinner');
+    spinner.style.display = isBusy ? '' : 'none';
+    statusEl.textContent = isBusy ? '' : '';
   }
 
   function renderResult(data){
     var verdict = (data && data.verdict) ? String(data.verdict) : 'Unknown';
-    var confidence = (data && typeof data.confidence === 'number') ? Math.round(data.confidence * 100) + '%' : '—';
     var rationale = (data && data.rationale) ? String(data.rationale) : '';
     var signals = (data && Array.isArray(data.signals)) ? data.signals : [];
 
@@ -24,7 +34,7 @@
 
     summaryEl.className = 'card result-card ' + tone;
     summaryEl.style.display = 'block';
-    summaryEl.innerHTML = '<h3 style="margin:0 0 6px 0;">Verdict: ' + verdict + ' <span style="opacity:.8;font-weight:400;">(' + confidence + ')</span></h3>' +
+    summaryEl.innerHTML = '<h3 style="margin:0 0 6px 0;">Verdict: ' + verdict + '</h3>' +
       (rationale ? '<div style="color:#d7dbec;">' + escapeHtml(rationale) + '</div>' : '');
 
     evidenceEl.className = 'card result-card neutral';
@@ -60,10 +70,10 @@
     }).then(function(json){
       renderResult(json);
     }).catch(function(err){
-      summaryEl.style.display = 'block';
-      summaryEl.className = 'card result-card bad';
-      summaryEl.innerHTML = '<strong>Error:</strong> ' + escapeHtml(err && err.message ? err.message : 'Request failed');
-      evidenceEl.style.display = 'none';
+  summaryEl.style.display = 'block';
+  summaryEl.className = 'card result-card bad';
+  summaryEl.innerHTML = '<strong>❗ Error:</strong> ' + escapeHtml(err && err.message ? err.message : 'Request failed');
+  evidenceEl.style.display = 'none';
     }).finally(function(){
       setBusy(false);
     });

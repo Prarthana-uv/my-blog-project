@@ -1,4 +1,16 @@
 export default async function handler(req, res) {
+  // Debug log incoming request
+  console.log('[Gemini Chat API] Method:', req.method);
+  console.log('[Gemini Chat API] Headers:', req.headers);
+  if (req.method === 'POST') {
+    let bodyData = '';
+    try {
+      bodyData = JSON.stringify(req.body);
+    } catch (e) {
+      bodyData = '[unserializable]';
+    }
+    console.log('[Gemini Chat API] Body:', bodyData);
+  }
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');

@@ -6,8 +6,28 @@ body {
   background: linear-gradient(120deg, #101735, #2e4beb, #0b1020 80%);
   background-size: 200% 200%;
   animation: bgmove 12s ease-in-out infinite;
-  color: #e6e8ef;
-  transition: background 0.6s;
+  color: var(--main-text, #e6e8ef);
+  transition: background 0.6s, color 0.3s;
+}
+
+:root {
+  --main-text: #e6e8ef;
+  --subtle-text: #b2b8d6;
+  --bg: #101735;
+  --card-bg: rgba(14, 21, 48, 0.92);
+  --btn-bg: linear-gradient(180deg, #3b5eff 0%, #2e4beb 100%);
+}
+
+[data-theme="light"] {
+  --main-text: #1a2233;
+  --subtle-text: #3b4a6b;
+  --bg: #f6f8fc;
+  --card-bg: #fff;
+  --btn-bg: linear-gradient(180deg, #3b5eff 0%, #a6c8ff 100%);
+}
+
+body, html {
+  background: var(--bg);
 }
 
 @keyframes bgmove {
@@ -34,7 +54,7 @@ body {
 .btn {
   display: inline-block;
   text-decoration: none;
-  background: linear-gradient(180deg, #3b5eff 0%, #2e4beb 100%);
+  background: var(--btn-bg);
   color: #fff;
   padding: 10px 18px;
   border-radius: 14px;
@@ -88,7 +108,7 @@ body {
   border: 1.5px solid #3b5eff;
 }
 .glass {
-  background: rgba(14, 21, 48, 0.92);
+  background: var(--card-bg);
   box-shadow: 0 10px 30px rgba(59,94,255,0.10);
   backdrop-filter: blur(8px);
 }
@@ -164,6 +184,23 @@ body {
 }
 .footer-links a:hover {
   color: #3b5eff;
+}
+
+
+/* Spinner for loading indicator */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #3b5eff44;
+  border-top: 3px solid #3b5eff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 900px) {

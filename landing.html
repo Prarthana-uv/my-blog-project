@@ -24,40 +24,33 @@ if (req.method !== 'POST') {
 
   <body>
 
+
     <header class="site-header">
-
       <div class="container header-inner">
-
         <div class="brand">TruthLens</div>
-
         <nav class="nav">
-
           <a href="landing.html">Home</a>
-
-          <a href="chat/index.html">Chat</a>
-
-
+          
         </nav>
-
-        <div class="cta">
-
+        <div class="cta" style="display: flex; align-items: center; gap: 10px;">
           <a class="btn" href="detector/index.html">Open Detector</a>
-
+          <button id="theme-toggle" title="Toggle dark/light mode" style="background:none;border:none;cursor:pointer;font-size:1.2rem;">🌙</button>
+          <a class="btn ghost" href="https://vercel.com/analytics" target="_blank" rel="noopener">Analytics</a>
         </div>
-
       </div>
-
     </header>
 
     <main>
       <section class="hero">
         <div class="container hero-inner" style="min-height: 60vh; display: flex; align-items: center; justify-content: center; flex-direction: column;">
           <h1 style="font-size:2.5rem; font-weight:800; margin-bottom: 18px;">TruthLens</h1>
-          <p style="font-size:1.2rem; margin-bottom: 32px; color:#b2b8d6;">AI-powered tools for news detection and chat</p>
+          <p style="font-size:1.2rem; margin-bottom: 32px; color:var(--subtle-text,#b2b8d6);">AI-powered tools for news detection and chat</p>
           <div class="hero-actions" style="display: flex; gap: 18px;">
             <a class="btn primary" href="detector/index.html">Detect Fake News</a>
-            <a class="btn ghost" href="chat/index.html">Gemini Chat</a>
+            
           </div>
+            
+          <div id="loading-indicator" style="display:none;margin-top:32px;"><span class="spinner"></span> Loading...</div>
         </div>
       </section>
     </main>
@@ -70,7 +63,7 @@ if (req.method !== 'POST') {
 
         <div class="footer-links">
 
-          <a href="chat/index.html">App</a>
+          
 
 
 
@@ -84,13 +77,31 @@ if (req.method !== 'POST') {
 
 
     <script>
+      // Year
       (function(){
         var y = document.getElementById('year');
         if (y) y.textContent = new Date().getFullYear();
       })();
+
+      // Theme toggle
+      const themeBtn = document.getElementById('theme-toggle');
+      if (themeBtn) {
+        function setTheme(mode) {
+          document.documentElement.setAttribute('data-theme', mode);
+          localStorage.setItem('theme', mode);
+          themeBtn.textContent = mode === 'dark' ? '🌙' : '☀️';
+        }
+        themeBtn.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme') || 'dark';
+          setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+        // On load
+        const saved = localStorage.getItem('theme');
+        setTheme(saved || 'dark');
+      }
     </script>
-    <!-- Vercel Analytics -->
-    <script defer src="https://analytics.vercel.com/script.js" data-api="/api/event" data-domain="your-vercel-domain.vercel.app"></script>
+  <!-- Vercel Analytics -->
+  <script defer src="https://analytics.vercel.com/script.js" data-api="/api/event" data-domain="your-vercel-domain.vercel.app"></script>
 
   </body>
   

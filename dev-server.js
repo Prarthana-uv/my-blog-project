@@ -6,8 +6,6 @@ import cors from 'cors';
 
 // Import API handlers
 import analyzeHandler from './api/analyze.js';
-import geminiChatHandler from './api/gemini-chat.js';
-import blogHandler from './api/blog.js';
 
 dotenv.config();
 
@@ -27,25 +25,17 @@ app.use(express.static(__dirname));
 
 // API routes
 app.use('/api/analyze', analyzeHandler);
-app.use('/api/gemini-chat', geminiChatHandler);
-app.use('/api/blog', blogHandler);
 
 // Route handlers for HTML pages
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'landing.html'));
 });
 
-app.get('/blog', (req, res) => {
-  res.sendFile(path.join(__dirname, 'blog.html'));
-});
-
 app.get('/detector', (req, res) => {
   res.sendFile(path.join(__dirname, 'detector', 'index.html'));
 });
 
-app.get('/chat', (req, res) => {
-  res.sendFile(path.join(__dirname, 'chat', 'index.html'));
-});
+// Chat route removed
 
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
